@@ -11,6 +11,8 @@
 package mundo;
 
 import anotaciones.Init;
+import anotaciones.NoInit;
+import anotaciones.PostConstructor;
 
 /**
  * Entidad que representa a un vendedor de MLA
@@ -71,4 +73,17 @@ public class Vendedor
         this.id = id;
     }
 
+    
+    @PostConstructor
+    public void validar(){
+        if(this.getNombres().equalsIgnoreCase("-- Vacio --")){
+            System.out.println("Los nombres no pueden ser vacio");
+        }
+        if(this.getApellidos().equalsIgnoreCase("-- Vacio --")){
+            System.out.println("Los apellidos no pueden ser vacio");
+        }
+        if(this.getSexo().equalsIgnoreCase("-- Vacio --")){
+            System.out.println("El sexo no puede ser vacio");
+        }
+    }
 }

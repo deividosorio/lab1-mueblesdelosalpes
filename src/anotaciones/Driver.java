@@ -22,7 +22,6 @@ import java.lang.reflect.Modifier;
 import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
-import mundo.Mueble;
 
 /**
  * Clase encargada de la instanciación y el manejo de las anotaciones
@@ -34,7 +33,7 @@ public class Driver
      * Anotaciones que tienen inserciones de codigo. Toda anotación que tenga un método que la
      * represente en la clase CodigoInserciones debe estar en este arreglo para que sea efectiva
      */
-    public static Class[] anotacionesInsercion = {Init.class, PostConstructor.class};
+    public static Class[] anotacionesInsercion = {Init.class, PostConstructor.class, Log.class, NoInit.class};
 
     /**
      * Estructura encargada de contener las clases y sus proxys
@@ -93,8 +92,8 @@ public class Driver
         File librerias = new File("./lib/");
         PrintWriter pw=null;
         try {
-            // La insercion sólo se realiza si el objetivo es una clase
-            if (!objetivo.isInterface() && !objetivo.isEnum()) {
+            // La insercion sólo se realiza si el objetivo es una clase  !objetivo.isInterface() &&
+            if (!objetivo.isEnum()) {
                 boolean tieneInyecciones = false;
                 pw = new PrintWriter(source);
                 String paquete = objetivo.getPackage().getName();

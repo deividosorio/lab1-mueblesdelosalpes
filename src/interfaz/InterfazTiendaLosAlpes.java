@@ -11,6 +11,7 @@
 package interfaz;
 
 import anotaciones.Driver;
+import anotaciones.Log;
 import java.awt.BorderLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
@@ -22,6 +23,7 @@ import mundo.*;
 /**
  * Ventana principal y punto de entrada de la aplicación
  */
+@Log
 public class InterfazTiendaLosAlpes extends JFrame {
 
     /**

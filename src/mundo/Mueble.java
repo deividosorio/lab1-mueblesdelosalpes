@@ -11,6 +11,7 @@
 
 package mundo;
 import anotaciones.Init;
+import anotaciones.NoInit;
 import anotaciones.PostConstructor;
 
 /**
@@ -22,6 +23,7 @@ public class Mueble {
     /**
      * Nombre del mueble
      */
+    @NoInit
     private String nombre;
 
     /**
@@ -68,10 +70,14 @@ public class Mueble {
     
     @PostConstructor
     public void validar(){
-        if(this.precio < 0 ){
-            System.out.println("validando ... cualquier cosa");
+        if(this.getPrecio() <= 0 ){
+            System.out.println("El precio no puede ser menor o igual a 0");
         }
-        
+        if (this.nombre == null){
+            System.out.println("El Nombre no puede ser nulo");
+        }else if(this.getNombre().equalsIgnoreCase("")){
+            System.out.println("El Nombre no puede estar vacio");
+        }
     }
     
 }

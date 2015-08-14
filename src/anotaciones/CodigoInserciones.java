@@ -11,11 +11,14 @@
 package anotaciones;
 
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStreamWriter;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Date;
 
 
 /**
@@ -37,29 +40,23 @@ public class CodigoInserciones
         for (Field f : claseRepresentada.getDeclaredFields()) {
             try {
                 f.setAccessible(true);
-                if (f.getType().equals(Integer.TYPE))
-                {
-                    f.set(instance, c.Integer());
-                } else if (f.getType().equals(Double.TYPE))
-                {
-                    f.set(instance, c.Double());
-                } else if (f.getType().equals(Character.TYPE))
-                {
-                    f.set(instance, c.Char());
-                } else if (f.getType().equals(String.class))
-                {
-                    f.set(instance, c.String());
-                } else if (f.getType().equals(Boolean.TYPE))
-                {
-                    f.set(instance, c.Boolean());
-                } else if (f.getType().equals(Float.TYPE))
-                {
-                    f.set(instance, c.Float());
-                } else if (f.getType().equals(Long.TYPE))
-                {
-                    f.set(instance, c.Long());
+                if (!f.isAnnotationPresent(NoInit.class)) {
+                    if (f.getType().equals(Integer.TYPE)) {
+                        f.set(instance, c.Integer());
+                    } else if (f.getType().equals(Double.TYPE)) {
+                        f.set(instance, c.Double());
+                    } else if (f.getType().equals(Character.TYPE)) {
+                        f.set(instance, c.Char());
+                    } else if (f.getType().equals(String.class)) {
+                        f.set(instance, c.String());
+                    } else if (f.getType().equals(Boolean.TYPE)) {
+                        f.set(instance, c.Boolean());
+                    } else if (f.getType().equals(Float.TYPE)) {
+                        f.set(instance, c.Float());
+                    } else if (f.getType().equals(Long.TYPE)) {
+                        f.set(instance, c.Long());
+                    }
                 }
-
             } 
             catch (Exception e)
             {
@@ -89,9 +86,37 @@ public class CodigoInserciones
      * @param method Método que fue anotado con @PostConstructor
      */
     public static void Log(Object instance, Class claseRepresentada, Annotation annotacion, Method method) throws Exception {
-        File f = new File("C:/Log/");
+        File f = new File("./log.txt");
+        Date fecha = new Date ();
         
-        
-        
+        try {
+            if (method.isAnnotationPresent(Log.class)) {
+                //Si no Existe el fichero lo crea
+                if (!f.exists()) {
+                    f.createNewFile();
+                }
+
+                BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(f, true)));
+                bw.write("--------");
+                bw.newLine();
+                bw.write("LOG");
+                bw.newLine();
+                bw.write("Fecha y hora:       " + fecha.toString());
+                bw.newLine();
+                bw.write("Nombre de la clase: " + claseRepresentada.getName());
+                bw.newLine();
+                bw.write("Metodo invocado:    " + method.getName());
+                bw.newLine();
+                bw.newLine();
+                bw.flush();
+                bw.close();
+
+            }
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
     }
+
+    
+
 }

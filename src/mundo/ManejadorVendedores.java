@@ -13,6 +13,7 @@ package mundo;
 
 import anotaciones.Cargar;
 import anotaciones.Driver;
+import anotaciones.Log;
 import java.util.ArrayList;
 
 /**
@@ -46,6 +47,7 @@ public class ManejadorVendedores {
      * Crea un nuevo vendedor y lo retorna
      * @return
      */
+    @Log
     public Vendedor nuevoVendedor() {
         Vendedor nuevo = (Vendedor)Driver.instanciar(Vendedor.class);;
         nuevo.setId(idGenerator++);
@@ -71,6 +73,7 @@ public class ManejadorVendedores {
      * Elimina un vendedor dado su ID
      * @param id
      */
+    @Log
     public void eliminarVendedor(int id) {
         for(int e = 0;e<vendedores.size();e++){
             if(vendedores.get(e).getId()==id){
@@ -80,5 +83,4 @@ public class ManejadorVendedores {
         }
 
     }
-
 }
